@@ -276,8 +276,17 @@
         </div>
         <div class="col-md-6">
                 <div class="form-group">
-                    <label for="productCategory">Category:</label>
-                    <input type="text" id="productCategory" name="productCategory" class="form-control" required>
+                    <!-- <label for="productCategory">Category:</label>
+                    <input type="text" id="productCategory" name="productCategory" class="form-control" required>-->
+                    @if($producttype->isEmpty()) 
+                    <p class="desc">No Categories are available</p>
+                    @else
+                    <select name="productCategory" id="productCategory" class="form-control">
+                        @foreach ($producttype as $category)
+                        <option value="{{$category->categoryName}}">{{$category->categoryName}}</option>
+                        @endforeach
+                    </select>
+                    @endif
                 </div>
                 
                 <div class="form-group">

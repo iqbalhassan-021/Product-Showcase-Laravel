@@ -73,12 +73,15 @@ class Controller extends BaseController
     public function products(){
         $producttype = DB::table('categories')->get();
         $store = DB::table('storedetails')->get();
-        $allproducts = DB::table('products')->get();
-        $feauredproducts = DB::table('products')->take(3)->get();
+        $allproducts = DB::table('products')->get()->reverse();
+        $featuredProducts = DB::table('products')
+        ->orderBy('id', 'desc') // Order products by ID column in descending order
+        ->take(3) // Take the first 3 results
+        ->get();
         return view('products',[
             'producttype'=>$producttype,
             'allproducts'=> $allproducts,
-            'feauredproducts'=> $feauredproducts,
+            'featuredProducts'=> $featuredProducts,
             'store'=> $store
             ]);
     }
@@ -86,13 +89,16 @@ class Controller extends BaseController
     public function product($id,Request  $request) { 
         $producttype = DB::table('categories')->get();
         $store = DB::table('storedetails')->get();
-        $feauredproducts = DB::table('products')->take(3)->get();
+        $featuredProducts = DB::table('products')
+        ->orderBy('id', 'desc') // Order products by ID column in descending order
+        ->take(3) // Take the first 3 results
+        ->get();
         $product = products::find($id);
         $allproducts = DB::table('products')->get();
         $user_name = $request->session()->get('user');
         return view('product_page',[
             'producttype'=>$producttype,
-            'feauredproducts'=> $feauredproducts,
+            'featuredProducts'=> $featuredProducts,
             'store'=> $store,
             'allproducts'=> $allproducts,
             'product' => $product,
@@ -103,7 +109,10 @@ class Controller extends BaseController
         $allproducts = DB::table('products')->get();
         $producttype = DB::table('categories')->get();
         $store = DB::table('storedetails')->get();
-        $feauredproducts = DB::table('products')->take(3)->get();
+        $featuredProducts = DB::table('products')
+        ->orderBy('id', 'desc') // Order products by ID column in descending order
+        ->take(3) // Take the first 3 results
+        ->get();
         
         $searchValue = $request->query('search'); // Retrieve search query from request
     
@@ -112,7 +121,7 @@ class Controller extends BaseController
       $user_name = $request->session()->get('user');
         return view('search', [
             'producttype' => $producttype,
-            'feauredproducts' => $feauredproducts,
+            'featuredProducts' => $featuredProducts,
             'store' => $store,
             'searchResults' => $searchResults,
             'allproducts' => $allproducts,

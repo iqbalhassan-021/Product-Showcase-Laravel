@@ -37,7 +37,8 @@ class auth_controller extends Controller
             if($username == "admin" && $password == "admin@tales"){
                 $srnum = 1;
                 // Retrieve data from the database
-                $products = DB::table('products')->get();
+                $products = DB::table('products')->get()->reverse();
+                $producttype = DB::table('categories')->get();
                 $categories = DB::table('categories')->get();
                 $slider = DB::table('slider')->get();
                 $users = DB::table('person')->get();
@@ -70,7 +71,8 @@ class auth_controller extends Controller
                     'store' => $store,
                     'order' => $order,
                     'order_count' => $order_count,
-                    'blog' => $blog
+                    'blog' => $blog,
+                    'producttype' => $producttype
                 ]);
             }
             else{
